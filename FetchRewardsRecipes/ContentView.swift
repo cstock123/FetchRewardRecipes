@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var recipes: [Recipe] = []
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ScrollView {
+            LazyVStack {
+                ForEach(recipes, id: \.uuid) { recipe in
+                    Text(recipe.name)
+                }
+            }
         }
-        .padding()
+        .onAppear {
+            Task {
+                async let recipesResponse: Response = try! API<Response>()
+                    .fetch(endpoint: Endpoint.Recipe.getRecipes)
+                
+                self.recipes = await recipesResponse.recipes
+            }
+        }
     }
 }
 

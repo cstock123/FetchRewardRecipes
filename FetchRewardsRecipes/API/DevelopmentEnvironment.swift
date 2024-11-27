@@ -22,7 +22,7 @@ enum DevelopmentEnvironment {
         case .production:
             URLProtocol.https.rawValue
         case .development:
-            URLProtocol.http.rawValue
+            URLProtocol.https.rawValue
         }
     }
     

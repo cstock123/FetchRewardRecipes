@@ -66,6 +66,7 @@ class API<Resp: Codable> {
             
             return responseDecoded
         } catch {
+            print(error)
             throw RecipesAPIError.decodingError
         }
     }

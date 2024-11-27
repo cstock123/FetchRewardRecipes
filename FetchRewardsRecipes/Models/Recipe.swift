@@ -11,5 +11,5 @@ struct Recipe: Codable {
     let name: String
     let photoUrlLarge: String
     let photoUrlSmall: String
-    let youtubeUrl: String
+    let youtubeUrl: String?
 }
