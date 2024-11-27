@@ -14,10 +14,18 @@ class RecipeListViewModel {
     
     func fetchRecipes() async {
         do {
+            #if DEBUG
+            // Helpful to debug UI for slow running network requests.
+            try await Task.sleep(for: .seconds(1))
+            #endif
+            
             let recipesResponse = try await API<Response>()
                 .fetch(endpoint: Endpoint.Recipe.getRecipes)
             
-            recipes = recipesResponse.recipes
+            withAnimation {
+                recipes = recipesResponse.recipes
+                    .sorted { $0.cuisine < $1.cuisine }
+            }
         } catch {
             print(error)
         }
@@ -35,6 +43,7 @@ struct RecipeListView: View {
                 }
             }
         }
+        .refreshable { await viewModel.fetchRecipes() }
         .task { await viewModel.fetchRecipes() }
     }
 }

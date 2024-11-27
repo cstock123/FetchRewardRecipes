@@ -17,7 +17,7 @@ struct RecipeRowView: View {
                 image
                     .foodImageSize()
             } placeholder: {
-                Image(systemName: "person.circle")
+                Image(systemName: "fork.knife")
                     .foodImageSize()
             }
             
@@ -37,7 +37,10 @@ struct RecipeRowView: View {
 
 extension Image {
     func foodImageSize() -> some View {
-        self.resizable().frame(width: 50, height: 50)
+        self
+            .resizable()
+            .frame(width: 50, height: 50)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
