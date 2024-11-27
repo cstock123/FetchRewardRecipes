@@ -11,6 +11,16 @@ import SwiftUI
 @Observable
 class RecipeListViewModel {
     var recipes = [Recipe]()
+    var apiError: RecipesAPIError? = nil {
+        didSet {
+            if apiError == nil {
+                alertIsPresented = false
+            } else {
+                alertIsPresented = true
+            }
+        }
+    }
+    var alertIsPresented: Bool = false
     
     func fetchRecipes() async {
         do {
@@ -27,7 +37,13 @@ class RecipeListViewModel {
                     .sorted { $0.cuisine < $1.cuisine }
             }
         } catch {
-            print(error)
+            if let apiError = error as? RecipesAPIError {
+                self.apiError = apiError
+            } else {
+                self.apiError = RecipesAPIError
+                    .unknownError(error.localizedDescription)
+                print(error.localizedDescription)
+            }
         }
     }
 }
@@ -42,6 +58,16 @@ struct RecipeListView: View {
                     RecipeRowView(recipe: recipe)
                 }
             }
+        }
+        .alert(
+            "To many cooks in the kitchen!",
+            isPresented: $viewModel.alertIsPresented
+        ) {
+            Button("Ok", role: .cancel) {
+                viewModel.apiError = nil
+            }
+        } message: {
+            Text("We've encountered an unexpected error. Please check your internet connection and try again.")
         }
         .refreshable { await viewModel.fetchRecipes() }
         .task { await viewModel.fetchRecipes() }

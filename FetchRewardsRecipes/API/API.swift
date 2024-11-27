@@ -17,17 +17,8 @@ class API<Resp: Codable> {
             throw RecipesAPIError.invalidRequest
         }
         
-        do {
-            let response: Resp = try await sendRequest(request: urlRequest)
-            
-            return response
-        } catch {
-            if let apiError = error as? RecipesAPIError {
-                throw apiError
-            } else {
-                throw RecipesAPIError.unknownError(error.localizedDescription)
-            }
-        }
+        let response: Resp = try await sendRequest(request: urlRequest)    
+        return response
     }
     
     private func sendRequest(request: URLRequest) async throws -> Resp {
