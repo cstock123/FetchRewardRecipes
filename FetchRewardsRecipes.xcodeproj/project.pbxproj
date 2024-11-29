@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		80A415152CFA4B2700AB08D3 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 80A415142CFA4B2700AB08D3 /* Nuke */; };
+		80A415172CFA4B2700AB08D3 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 80A415162CFA4B2700AB08D3 /* NukeUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		80A414D62CF69F3B00AB08D3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80A415152CFA4B2700AB08D3 /* Nuke in Frameworks */,
+				80A415172CFA4B2700AB08D3 /* NukeUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +119,8 @@
 			);
 			name = FetchRewardsRecipes;
 			packageProductDependencies = (
+				80A415142CFA4B2700AB08D3 /* Nuke */,
+				80A415162CFA4B2700AB08D3 /* NukeUI */,
 			);
 			productName = FetchRewardsRecipes;
 			productReference = 80A414C52CF69F3900AB08D3 /* FetchRewardsRecipes.app */;
@@ -195,6 +204,9 @@
 			);
 			mainGroup = 80A414BC2CF69F3900AB08D3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				80A415132CFA4B2700AB08D3 /* XCRemoteSwiftPackageReference "Nuke" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 80A414C62CF69F3900AB08D3 /* Products */;
 			projectDirPath = "";
@@ -558,6 +570,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		80A415132CFA4B2700AB08D3 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		80A415142CFA4B2700AB08D3 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80A415132CFA4B2700AB08D3 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		80A415162CFA4B2700AB08D3 /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80A415132CFA4B2700AB08D3 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 80A414BD2CF69F3900AB08D3 /* Project object */;
 }

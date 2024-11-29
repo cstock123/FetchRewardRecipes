@@ -6,20 +6,30 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct RecipeRowView: View {
     let recipe: Recipe
     
     var body: some View {
         HStack(spacing: 15) {
-            // TODO: Replace this with NukeUI's better caching component
-            AsyncImage(url: URL(string: recipe.photoUrlSmall)!) { image in
-                image
-                    .foodImageSize()
-            } placeholder: {
-                Image(systemName: "fork.knife")
-                    .foodImageSize()
+            LazyImage(url: URL(string: recipe.photoUrlSmall)) {
+                state in
+                if let image = state.image {
+                    image
+                        .foodImageSize()
+                } else {
+                    Image(systemName: "fork.knife")
+                        .foodImageSize()
+                }
             }
+            .processors(
+                [
+                    .resize(width: 50),
+                    .resize(height: 50),
+                    .roundedCorners(radius: 10)
+                ]
+            )
             
             VStack(alignment: .leading) {
                 Text(recipe.name)

@@ -56,6 +56,7 @@ struct RecipeListView: View {
             LazyVStack {
                 ForEach(viewModel.recipes, id: \.uuid) { recipe in
                     RecipeRowView(recipe: recipe)
+                    Divider()
                 }
             }
         }
