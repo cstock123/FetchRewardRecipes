@@ -21,7 +21,7 @@ class API<Resp: Codable> {
         return response
     }
     
-    private func sendRequest(request: URLRequest) async throws -> Resp {
+    func sendRequest(request: URLRequest) async throws -> Resp {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse else {
@@ -34,7 +34,7 @@ class API<Resp: Codable> {
         return decodedResponse
     }
     
-    private func checkForErrors(response: HTTPURLResponse) throws {
+    func checkForErrors(response: HTTPURLResponse) throws {
         switch response.statusCode {
         case 200..<300:
             break
@@ -43,13 +43,11 @@ class API<Resp: Codable> {
         case 500 ..< 600:
             throw RecipesAPIError.serverError
         default:
-            print(
-                "Found Unexpected HTTP Response StatusCode: \(response.statusCode)"
-            )
+            throw RecipesAPIError.unknownError("Unexpected HTTP Response StatusCode: \(response.statusCode)")
         }
     }
     
-    private func decodeResponseData(data: Data) throws -> Resp {
+    func decodeResponseData(data: Data) throws -> Resp {
         do {
             let responseDecoded = try JSONDecoder
                 .recipeResponseDecoder
@@ -57,7 +55,6 @@ class API<Resp: Codable> {
             
             return responseDecoded
         } catch {
-            print(error)
             throw RecipesAPIError.decodingError
         }
     }

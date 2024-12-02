@@ -11,7 +11,11 @@ import SwiftUI
 struct FetchRewardsRecipesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {            
+                ContentView()
+                    .navigationTitle("Recipes")
+                    .navigationBarTitleDisplayMode(.large)
+            }
         }
     }
 }

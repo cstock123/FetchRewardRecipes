@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum HTTPMethod: String {
+enum HTTPMethod: String, CaseIterable {
     case get, post, put, delete
 }
 
-class URLRequestBuilder {
+struct URLRequestBuilder {
     func buildRequest(
         path: String,
         httpMethod: HTTPMethod
@@ -27,7 +27,7 @@ class URLRequestBuilder {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = httpMethod.rawValue
+        request.httpMethod = httpMethod.rawValue.uppercased()
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         return request

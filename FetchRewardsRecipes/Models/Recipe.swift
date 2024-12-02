@@ -5,7 +5,7 @@
 //  Created by Camden Stocker on 11/26/24.
 //
 
-struct Recipe: Codable {
+struct Recipe: Codable, Equatable {
     let uuid: String
     let cuisine: String
     let name: String

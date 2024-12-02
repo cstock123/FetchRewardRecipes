@@ -13,6 +13,7 @@ enum Domain: String {
     case cloudfront = "d3jbb8n5wk0qxi.cloudfront.net"
 }
 
+// At the moment, our environments are the same, but this allows for easy modification in the future to support multiple environments.
 enum DevelopmentEnvironment {
     case production
     case development
