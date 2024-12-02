@@ -51,6 +51,10 @@ class RecipeListViewModel {
 struct RecipeListView: View {
     @State private var viewModel = RecipeListViewModel()
     
+    
+    let ALERT_TITLE = "To many cooks in the kitchen!"
+    let ALERT_MESSAGE = "We've encountered an unexpected error. Please check your internet connection and try again."
+    
     var body: some View {
         ScrollView {
             LazyVStack {
@@ -61,16 +65,20 @@ struct RecipeListView: View {
             }
         }
         .alert(
-            "To many cooks in the kitchen!",
+            ALERT_TITLE,
             isPresented: $viewModel.alertIsPresented
         ) {
-            Button("Ok", role: .cancel) {
-                viewModel.apiError = nil
-            }
+            alertButton
         } message: {
-            Text("We've encountered an unexpected error. Please check your internet connection and try again.")
+            Text(ALERT_MESSAGE)
         }
         .refreshable { await viewModel.fetchRecipes() }
         .task { await viewModel.fetchRecipes() }
+    }
+    
+    var alertButton: some View {
+        Button("Ok", role: .cancel) {
+            viewModel.apiError = nil
+        }
     }
 }
