@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct RecipeListContainerView: View {
-    @State private var viewModel = RecipeListViewModel()
+    @State private var viewModel = RecipeListViewModel(
+        recipeService: RecipeService()
+    )
     
     let ALERT_TITLE = "To many cooks in the kitchen!"
     let ALERT_MESSAGE = "We've encountered an unexpected error. Please check your internet connection and try again."

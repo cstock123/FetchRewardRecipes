@@ -11,6 +11,7 @@ import SwiftUI
 @MainActor
 @Observable
 class RecipeListViewModel {
+    let recipeService: any RecipeAPIService
     var recipes = [Recipe]()
     var filteredRecipes: [Recipe] {
         guard searchQuery != "" else { return recipes }
@@ -32,6 +33,10 @@ class RecipeListViewModel {
     }
     var alertIsPresented: Bool = false
     
+    init(recipeService: any RecipeAPIService) {
+        self.recipeService = recipeService
+    }
+    
     func loadRecipes() async {
         isLoading = true
         await fetchRecipes()
@@ -39,25 +44,16 @@ class RecipeListViewModel {
     }
     
     func fetchRecipes() async {
-        do {
-            #if DEBUG
-            // Helpful to debug UI for slow running network requests.
-            try await Task.sleep(for: .seconds(1))
-            #endif
-            
-            let recipesResponse = try await API<Response>()
-                .fetch(endpoint: Endpoint.Recipe.getRecipes)
-            
-            recipes = recipesResponse.recipes
-                .sorted { $0.cuisine < $1.cuisine }
-        } catch {
-            if let apiError = error as? RecipesAPIError {
-                self.apiError = apiError
-            } else {
-                self.apiError = RecipesAPIError
-                    .unknownError(error.localizedDescription)
-            }
-            print(error.localizedDescription)
+        #if DEBUG
+        // Helpful to debug UI for slow running network requests.
+        do { try await Task.sleep(for: .seconds(1)) } catch {}
+        #endif
+        
+        switch await recipeService.getRecipes() {
+        case .success(let recipes):
+            self.recipes = recipes
+        case .failure(let apiError):
+            self.apiError = apiError
         }
     }
 }
