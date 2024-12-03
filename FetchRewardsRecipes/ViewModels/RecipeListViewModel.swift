@@ -20,6 +20,7 @@ class RecipeListViewModel {
         }
     }
     var searchQuery: String = ""
+    var isLoading: Bool = false
     var apiError: RecipesAPIError? = nil {
         didSet {
             if apiError == nil {
@@ -31,6 +32,11 @@ class RecipeListViewModel {
     }
     var alertIsPresented: Bool = false
     
+    func loadRecipes() async {
+        isLoading = true
+        await fetchRecipes()
+        isLoading = false
+    }
     
     func fetchRecipes() async {
         do {
@@ -42,18 +48,16 @@ class RecipeListViewModel {
             let recipesResponse = try await API<Response>()
                 .fetch(endpoint: Endpoint.Recipe.getRecipes)
             
-            withAnimation {
-                recipes = recipesResponse.recipes
-                    .sorted { $0.cuisine < $1.cuisine }
-            }
+            recipes = recipesResponse.recipes
+                .sorted { $0.cuisine < $1.cuisine }
         } catch {
             if let apiError = error as? RecipesAPIError {
                 self.apiError = apiError
             } else {
                 self.apiError = RecipesAPIError
                     .unknownError(error.localizedDescription)
-                print(error.localizedDescription)
             }
+            print(error.localizedDescription)
         }
     }
 }

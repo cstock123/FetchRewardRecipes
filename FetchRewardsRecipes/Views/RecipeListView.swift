@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct RecipeListView: View {
-    @State private var viewModel = RecipeListViewModel()
-    
-    let ALERT_TITLE = "To many cooks in the kitchen!"
-    let ALERT_MESSAGE = "We've encountered an unexpected error. Please check your internet connection and try again."
+    @Bindable var viewModel: RecipeListViewModel
     
     var body: some View {
         ScrollView {
@@ -20,24 +17,18 @@ struct RecipeListView: View {
                     RecipeRowView(recipe: recipe)
                     Divider()
                 }
+                
+                if !viewModel.searchQuery.isEmpty &&
+                    viewModel.filteredRecipes.isEmpty {
+                    Text("No Results")
+                }
             }
         }
-        .alert(
-            ALERT_TITLE,
-            isPresented: $viewModel.alertIsPresented
-        ) {
-            alertButton
-        } message: {
-            Text(ALERT_MESSAGE)
-        }
         .refreshable { await viewModel.fetchRecipes() }
-        .searchable(text: $viewModel.searchQuery, prompt: "Search Recipes")
-        .task { await viewModel.fetchRecipes() }
-    }
-    
-    var alertButton: some View {
-        Button("Ok", role: .cancel) {
-            viewModel.apiError = nil
-        }
+        .searchable(
+            text: $viewModel.searchQuery,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: "Search Recipes"
+        )
     }
 }

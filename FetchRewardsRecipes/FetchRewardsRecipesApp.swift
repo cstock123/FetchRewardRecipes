@@ -14,7 +14,7 @@ struct FetchRewardsRecipesApp: App {
             NavigationStack {            
                 ContentView()
                     .navigationTitle("Recipes")
-                    .navigationBarTitleDisplayMode(.large)
+                    .navigationBarTitleDisplayMode(.inline)
             }
         }
     }

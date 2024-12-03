@@ -11,7 +11,7 @@ struct ContentView: View {
     @State private var recipes: [Recipe] = []
     
     var body: some View {
-        RecipeListView()
+        RecipeListContainerView()
     }
 }
 
