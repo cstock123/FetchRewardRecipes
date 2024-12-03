@@ -81,6 +81,7 @@ struct APITests {
                     name: "Pizza",
                     photoUrlLarge: "large_url_stub",
                     photoUrlSmall: "small_url_stub",
+                    sourceUrl: "source_url_stub",
                     youtubeUrl: "youtube_url_stub")
             ]
         )

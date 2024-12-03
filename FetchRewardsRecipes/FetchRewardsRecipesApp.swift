@@ -10,12 +10,8 @@ import SwiftUI
 @main
 struct FetchRewardsRecipesApp: App {
     var body: some Scene {
-        WindowGroup {
-            NavigationStack {            
+        WindowGroup {            
                 ContentView()
-                    .navigationTitle("Recipes")
-                    .navigationBarTitleDisplayMode(.inline)
-            }
         }
     }
 }

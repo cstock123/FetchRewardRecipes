@@ -11,7 +11,11 @@ struct ContentView: View {
     @State private var recipes: [Recipe] = []
     
     var body: some View {
-        RecipeListContainerView()
+        NavigationStack {
+            RecipeListContainerView()
+                .navigationTitle("Recipes")
+                .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
